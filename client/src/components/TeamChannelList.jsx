@@ -17,7 +17,7 @@ const TeamChannelList = ({
   if(error){
     return type === 'team' ? (
       <div className="team-channel-list">
-        <p className='team-channel-list__message'>
+        <p className='team-channel-list__message' style={{color: 'black'}}>
           Connection error, please wait a moment and try again
         </p>
       </div>
@@ -27,7 +27,7 @@ const TeamChannelList = ({
   if(loading){
     return (
       <div className="team-channel-list">
-        <p className='team-channel-list__message loading'>
+        <p className='team-channel-list__message loading' style={{color: 'black'}}>
           {type === 'team' ? 'Channels' : 'Messages'} loading...
         </p>
       </div>
