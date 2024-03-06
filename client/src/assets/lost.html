@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>Connection Failed</title>
+    <style>
+      html {
+        box-sizing: border-box;
+        word-break: break-word;
+        font-family: system -apple-system, BlinkMacSystemFont, Helvetica Neue, PingFang SC, Hiragino Sans GB, Microsoft YaHei, Arial, sans-serif;
+        color: #191919;
+        background-color: #fff;
+        line-height: 1.15;
+        font-size: 14px;
+      }
+      body {
+        display: inline-block;
+        background: white;
+        height: 100vh;
+        margin: 0;
+      }
+      .layout-error {
+        position: absolute;
+        top: -100px;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        display: -webkit-box;
+        display: -webkit-flex;
+        display: flex;
+        -webkit-box-orient: vertical;
+        -webkit-box-direction: normal;
+        -webkit-flex-direction: column;
+        flex-direction: column;
+        -webkit-box-pack: center;
+        -webkit-justify-content: center;
+        justify-content: center;
+        -webkit-box-align: center;
+        -webkit-align-items: center;
+        align-items: center;
+        padding: 0 20px;
+      }
+      .layout-error img {
+        width: 160px;
+        height: 140px;
+        margin: 0 auto;
+        vertical-align: middle;
+        border-style: none;
+      }
+      .layout-error h3 {
+        font-size: 18px;
+        box-sizing: inherit;
+        margin: 0;
+        padding: 0;
+        -webkit-tap-highlight-color: transparent;
+        display: block;
+        font-size: 1.17em;
+        margin-block-start: 1em;
+        margin-block-end: 1em;
+        margin-inline-start: 0px;
+        margin-inline-end: 0px;
+        font-weight: bold;
+      }
+      .layout-error p {
+        text-align: center;
+        margin: 8px 0 16px;
+        box-sizing: inherit;
+        padding: 0;
+      }
+      .tips {
+        color: rgba(0, 0, 0, 0.5);
+      }
+      .debug {
+        color: rgba(0, 0, 0, 0.5);
+      }
+      strong {
+        font-weight: bolder;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="layout-error flex-center">
+      <img src="./img/icon-error.png" alt="Something is wrong" />
+      <h3>Network Error</h3>
+      <p class="tips">Please Check your network and swipe to refresh</p>
+      <p>
+        <strong data-v-62474c14="">Telegram: </strong>
+        <a data-v-62474c14="" href="https://t.me/score808vip">https://t.me/score808vip</a>
+      </p>
+      <p>
+        <strong data-v-62474c14="">Email: </strong>
+        <a data-v-62474c14="" href="mailto:adscore808@gmail.com">adscore808@gmail.com</a>
+      </p>
+      <br />
+      <p id="debugInfo" class="debug">Debug Info</p>
+      <p id="uaInfo" class="debug">Debug Info</p>
+      <p id="checkInMsg" class="debug">CheckIn</p>
+      <p id="homeUrlDns" class="debug">HomeUrlDns</p>
+    </div>
+    <script>
+      // Give webview 1.5s to load other javascript files.
+      document.getElementById('uaInfo').innerText = window.navigator.userAgent
+      setTimeout(() => {
+        console.log('Score808# js try to call app')
+        const bridge = window.WebViewJavascriptBridge
+        // JS tries to call the native method to judge whether it has been loaded successfully and let itself know whether its user is in android app or IOS app
+        bridge.callHandler('DeviceLoadJavascriptSuccess', { key: 'JSValue' }, function (response) {
+          console.log('Score808# js injected by app')
+          document.getElementById('debugInfo').innerText = response.msg
+          window.AndroidLoadJSSuccess = true
+        })
+
+        bridge.callHandler('GetCheckIn', {}, function (response) {
+          document.getElementById('checkInMsg').innerText = response.msg
+        })
+
+        bridge.callHandler('GetHomeUrlDns', {}, function (response) {
+          document.getElementById('homeUrlDns').innerText = response.msg
+        })
+      }, 500)
+    </script>
+  </body>
+</html>
